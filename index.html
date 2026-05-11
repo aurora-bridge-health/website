@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora Bridge Health · 桥健康咨询</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0b1d33;
+  --blue:   #1B4F8C;
+  --blue2:  #2563a8;
+  --gold:   #C9952A;
+  --gold2:  #e8b84b;
+  --cream:  #faf8f4;
+  --white:  #ffffff;
+  --gray:   #f4f6f9;
+  --text:   #1a2535;
+  --muted:  #6b7a90;
+  --light:  #e8eef6;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior:smooth; }
+
+body {
+font-family:‘DM Sans’, sans-serif;
+color: var(–text);
+background: var(–white);
+overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:#f0f0f0; }
+::-webkit-scrollbar-thumb { background:var(–blue); border-radius:3px; }
+
+/* ─── NAV ─── */
+nav {
+position: fixed; top:0; left:0; right:0; z-index:100;
+padding: 0 6%;
+display: flex; align-items:center; justify-content:space-between;
+height: 70px;
+background: rgba(11,29,51,0.96);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid rgba(201,149,42,0.15);
+transition: all 0.3s;
+}
+.nav-logo {
+display:flex; align-items:center; gap:12px;
+}
+.nav-logo-mark {
+width:36px; height:36px; position:relative;
+}
+.nav-logo-mark svg { width:100%; height:100%; }
+.nav-brand {
+display:flex; flex-direction:column; gap:1px;
+}
+.nav-en {
+font-family:‘Cormorant Garamond’, serif;
+font-size:18px; font-weight:600; color:var(–white);
+letter-spacing:1px; line-height:1;
+}
+.nav-zh {
+font-family:‘Noto Serif SC’, serif;
+font-size:10px; font-weight:300; color:rgba(201,149,42,0.8);
+letter-spacing:3px;
+}
+.nav-links {
+display:flex; align-items:center; gap:36px; list-style:none;
+}
+.nav-links a {
+font-family:‘DM Sans’; font-size:13px; font-weight:400;
+color:rgba(255,255,255,0.7); text-decoration:none;
+letter-spacing:0.5px;
+transition: color 0.2s;
+position:relative;
+}
+.nav-links a::after {
+content:’’; position:absolute; bottom:-4px; left:0; right:0;
+height:1px; background:var(–gold);
+transform:scaleX(0); transform-origin:left;
+transition:transform 0.3s;
+}
+.nav-links a:hover { color:var(–white); }
+.nav-links a:hover::after { transform:scaleX(1); }
+.nav-cta {
+background:var(–gold); color:var(–navy) !important;
+padding:9px 22px; border-radius:4px;
+font-weight:500 !important; font-size:13px !important;
+transition: background 0.2s, transform 0.2s !important;
+}
+.nav-cta:hover { background:var(–gold2) !important; transform:translateY(-1px); }
+.nav-cta::after { display:none !important; }
+
+/* ─── HERO ─── */
+#hero {
+min-height: 100vh;
+background: linear-gradient(155deg, #060f1c 0%, #0b1d33 40%, #102844 70%, #0d2040 100%);
+position:relative; overflow:hidden;
+display:flex; align-items:center;
+}
+.hero-bg-lines {
+position:absolute; inset:0; pointer-events:none;
+background-image:
+linear-gradient(rgba(201,149,42,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(201,149,42,0.04) 1px, transparent 1px);
+background-size: 80px 80px;
+}
+.hero-orb1 {
+position:absolute; width:600px; height:600px; border-radius:50%;
+background:radial-gradient(circle, rgba(27,79,140,0.3) 0%, transparent 70%);
+top:-150px; right:-100px; pointer-events:none;
+}
+.hero-orb2 {
+position:absolute; width:400px; height:400px; border-radius:50%;
+background:radial-gradient(circle, rgba(201,149,42,0.1) 0%, transparent 70%);
+bottom:50px; left:-100px; pointer-events:none;
+}
+.hero-content {
+position:relative; z-index:2;
+padding: 120px 6% 80px;
+max-width: 700px;
+}
+.hero-tag {
+display:inline-flex; align-items:center; gap:8px;
+background:rgba(201,149,42,0.12); border:1px solid rgba(201,149,42,0.25);
+padding:6px 16px; border-radius:20px; margin-bottom:36px;
+}
+.hero-tag-dot { width:6px; height:6px; border-radius:50%; background:var(–gold); }
+.hero-tag span {
+font-family:‘Noto Sans SC’; font-size:11px; font-weight:300;
+color:rgba(201,149,42,0.9); letter-spacing:2px;
+}
+.hero-h1 {
+font-family:‘Cormorant Garamond’, serif;
+font-size: clamp(52px, 7vw, 80px);
+font-weight:300; color:var(–white);
+line-height:1.1; margin-bottom:16px;
+}
+.hero-h1 em {
+font-style:italic; color:var(–gold);
+}
+.hero-h1-zh {
+font-family:‘Noto Serif SC’; font-size:18px; font-weight:300;
+color:rgba(255,255,255,0.45); letter-spacing:4px;
+margin-bottom:32px; display:block;
+}
+.hero-desc {
+font-size:16px; line-height:1.85; color:rgba(255,255,255,0.65);
+max-width:560px; margin-bottom:48px;
+font-weight:300;
+}
+.hero-btns {
+display:flex; gap:16px; flex-wrap:wrap;
+}
+.btn-primary {
+background:var(–gold); color:var(–navy);
+padding:14px 32px; border-radius:4px; border:none;
+font-family:‘DM Sans’; font-size:14px; font-weight:500;
+cursor:pointer; text-decoration:none; display:inline-block;
+transition: all 0.25s;
+letter-spacing:0.3px;
+}
+.btn-primary:hover { background:var(–gold2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(201,149,42,0.3); }
+.btn-outline {
+background:transparent; color:var(–white);
+padding:14px 32px; border-radius:4px;
+border:1px solid rgba(255,255,255,0.25);
+font-family:‘DM Sans’; font-size:14px; font-weight:400;
+cursor:pointer; text-decoration:none; display:inline-block;
+transition: all 0.25s;
+}
+.btn-outline:hover { border-color:rgba(255,255,255,0.6); background:rgba(255,255,255,0.06); }
+
+.hero-stats {
+position:absolute; right:6%; bottom:80px;
+display:flex; flex-direction:column; gap:32px;
+z-index:2;
+}
+.stat-item { text-align:right; }
+.stat-num {
+font-family:‘Cormorant Garamond’; font-size:48px; font-weight:300;
+color:var(–white); line-height:1;
+}
+.stat-num span { color:var(–gold); font-size:28px; }
+.stat-label {
+font-family:‘Noto Sans SC’; font-size:11px; font-weight:300;
+color:rgba(255,255,255,0.45); letter-spacing:2px; margin-top:4px;
+}
+.hero-scroll {
+position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+display:flex; flex-direction:column; align-items:center; gap:8px; z-index:2;
+}
+.hero-scroll span {
+font-family:‘DM Sans’; font-size:10px; letter-spacing:3px;
+color:rgba(255,255,255,0.3); text-transform:uppercase;
+}
+.scroll-line {
+width:1px; height:50px;
+background:linear-gradient(180deg, rgba(201,149,42,0.6), transparent);
+animation:scrollPulse 2s infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* ─── SECTION COMMON ─── */
+section { padding:100px 6%; }
+.section-tag {
+display:inline-flex; align-items:center; gap:8px; margin-bottom:20px;
+}
+.section-tag-line { width:30px; height:1px; background:var(–gold); }
+.section-tag span {
+font-family:‘Noto Sans SC’; font-size:11px; font-weight:400;
+color:var(–gold); letter-spacing:3px; text-transform:uppercase;
+}
+.section-h2 {
+font-family:‘Cormorant Garamond’; font-size:clamp(36px,4vw,52px);
+font-weight:300; color:var(–navy); line-height:1.2; margin-bottom:16px;
+}
+.section-h2 em { font-style:italic; color:var(–blue); }
+.section-sub {
+font-family:‘Noto Serif SC’; font-size:13px; font-weight:300;
+color:var(–muted); letter-spacing:3px; margin-bottom:60px;
+}
+
+/* ─── ABOUT ─── */
+#about {
+background:var(–cream);
+display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+}
+.about-visual {
+position:relative;
+}
+.about-card-main {
+background:linear-gradient(140deg, var(–navy) 0%, var(–blue) 100%);
+border-radius:12px; padding:48px 40px;
+color:var(–white); position:relative; overflow:hidden;
+}
+.about-card-main::before {
+content:‘桥’; position:absolute; right:-20px; bottom:-40px;
+font-family:‘Noto Serif SC’; font-size:200px; font-weight:700;
+color:rgba(255,255,255,0.04); pointer-events:none;
+}
+.about-card-accent {
+position:absolute; bottom:-20px; right:-20px;
+background:var(–gold); border-radius:10px; padding:24px 28px;
+box-shadow:0 20px 40px rgba(201,149,42,0.3);
+}
+.about-card-accent-num {
+font-family:‘Cormorant Garamond’; font-size:36px; font-weight:600; color:var(–navy);
+line-height:1;
+}
+.about-card-accent-label {
+font-family:‘Noto Sans SC’; font-size:10px; color:var(–navy);
+letter-spacing:2px; margin-top:4px; opacity:0.7;
+}
+.about-avatar-label {
+font-family:‘Cormorant Garamond’; font-size:28px; font-weight:300;
+color:var(–white); margin-bottom:6px;
+}
+.about-avatar-title {
+font-family:‘Noto Sans SC’; font-size:11px; font-weight:300;
+color:rgba(201,149,42,0.8); letter-spacing:2px; margin-bottom:24px;
+}
+.about-avatar-desc {
+font-size:14px; line-height:1.8; color:rgba(255,255,255,0.7);
+}
+.about-text {}
+.about-p {
+font-size:15px; line-height:1.9; color:#3a4a5c; margin-bottom:20px;
+}
+.about-values {
+display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:40px;
+}
+.value-item {
+padding:20px; border-radius:8px; background:var(–white);
+border:1px solid var(–light);
+transition: border-color 0.2s, transform 0.2s;
+}
+.value-item:hover { border-color:var(–gold); transform:translateY(-2px); }
+.value-icon { font-size:22px; margin-bottom:10px; }
+.value-title {
+font-family:‘Noto Serif SC’; font-size:13px; font-weight:600;
+color:var(–navy); margin-bottom:6px;
+}
+.value-desc { font-size:12px; color:var(–muted); line-height:1.7; }
+
+/* ─── SERVICES ─── */
+#services {
+background:var(–white);
+}
+.services-intro {
+max-width:560px; margin-bottom:60px;
+}
+.services-grid {
+display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+}
+.service-card {
+border:1px solid var(–light); border-radius:12px;
+padding:36px 28px; position:relative; overflow:hidden;
+transition:all 0.3s; cursor:default;
+background:var(–white);
+}
+.service-card::before {
+content:’’; position:absolute; bottom:0; left:0; right:0; height:3px;
+background:linear-gradient(90deg, var(–blue), var(–gold));
+transform:scaleX(0); transform-origin:left; transition:transform 0.4s;
+}
+.service-card:hover { border-color:rgba(27,79,140,0.2); transform:translateY(-4px); box-shadow:0 20px 40px rgba(27,79,140,0.08); }
+.service-card:hover::before { transform:scaleX(1); }
+.service-num {
+font-family:‘Cormorant Garamond’; font-size:48px; font-weight:300;
+color:var(–light); line-height:1; margin-bottom:20px;
+transition:color 0.3s;
+}
+.service-card:hover .service-num { color:rgba(27,79,140,0.15); }
+.service-icon { font-size:28px; margin-bottom:16px; display:block; }
+.service-title {
+font-family:‘Noto Serif SC’; font-size:16px; font-weight:600;
+color:var(–navy); margin-bottom:10px;
+}
+.service-title-en {
+font-family:‘Cormorant Garamond’; font-size:13px; font-style:italic;
+color:var(–blue); margin-bottom:16px; display:block;
+}
+.service-desc {
+font-size:13px; line-height:1.85; color:var(–muted);
+}
+.service-items {
+margin-top:16px; list-style:none;
+}
+.service-items li {
+font-size:12px; color:var(–muted); padding:4px 0;
+border-bottom:1px solid var(–light);
+display:flex; align-items:center; gap:8px;
+}
+.service-items li::before {
+content:’’; width:4px; height:4px; border-radius:50%;
+background:var(–gold); flex-shrink:0;
+}
+.service-items li:last-child { border:none; }
+
+/* ─── HOW IT WORKS ─── */
+#process {
+background:linear-gradient(160deg, var(–navy) 0%, #102244 100%);
+position:relative; overflow:hidden;
+}
+#process::before {
+content:’’; position:absolute; inset:0;
+background-image: radial-gradient(rgba(201,149,42,0.06) 1px, transparent 1px);
+background-size:40px 40px; pointer-events:none;
+}
+#process .section-h2 { color:var(–white); }
+#process .section-sub { color:rgba(255,255,255,0.4); }
+.process-grid {
+display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+position:relative;
+}
+.process-grid::before {
+content:’’; position:absolute;
+top:40px; left:10%; right:10%; height:1px;
+background:linear-gradient(90deg, transparent, rgba(201,149,42,0.3), rgba(201,149,42,0.3), transparent);
+}
+.process-step { padding:0 20px; text-align:center; }
+.step-num-wrap {
+width:80px; height:80px; border-radius:50%;
+background:rgba(201,149,42,0.1); border:1px solid rgba(201,149,42,0.3);
+display:flex; align-items:center; justify-content:center;
+margin:0 auto 28px; position:relative; z-index:1;
+transition:all 0.3s;
+}
+.process-step:hover .step-num-wrap {
+background:var(–gold); border-color:var(–gold);
+box-shadow:0 0 30px rgba(201,149,42,0.4);
+}
+.step-num {
+font-family:‘Cormorant Garamond’; font-size:28px; font-weight:300;
+color:var(–gold); line-height:1;
+}
+.process-step:hover .step-num { color:var(–navy); }
+.step-title {
+font-family:‘Noto Serif SC’; font-size:15px; font-weight:600;
+color:var(–white); margin-bottom:12px;
+}
+.step-desc {
+font-size:13px; line-height:1.8; color:rgba(255,255,255,0.5);
+}
+
+/* ─── DESTINATIONS ─── */
+#destinations {
+background:var(–gray);
+}
+.dest-grid {
+display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+}
+.dest-card {
+border-radius:12px; overflow:hidden; position:relative;
+height:300px; cursor:default;
+}
+.dest-bg {
+position:absolute; inset:0;
+transition:transform 0.5s ease;
+}
+.dest-card:hover .dest-bg { transform:scale(1.05); }
+.dest-card:nth-child(1) .dest-bg {
+background:linear-gradient(160deg, #1a3a6c 0%, #2a5a9c 40%, #3a7ab8 100%);
+}
+.dest-card:nth-child(2) .dest-bg {
+background:linear-gradient(160deg, #1a5c3a 0%, #2a8a56 40%, #3aaa70 100%);
+}
+.dest-card:nth-child(3) .dest-bg {
+background:linear-gradient(160deg, #5c3a1a 0%, #8a5a2a 40%, #c4843c 100%);
+}
+.dest-overlay {
+position:absolute; inset:0;
+background:linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%);
+}
+.dest-content {
+position:absolute; bottom:0; left:0; right:0; padding:28px;
+}
+.dest-tag {
+display:inline-block; background:rgba(201,149,42,0.85); color:var(–navy);
+font-family:‘Noto Sans SC’; font-size:10px; letter-spacing:2px;
+padding:4px 10px; border-radius:3px; margin-bottom:10px;
+}
+.dest-name {
+font-family:‘Cormorant Garamond’; font-size:28px; font-weight:600;
+color:var(–white); display:block; margin-bottom:6px;
+}
+.dest-desc { font-size:12px; color:rgba(255,255,255,0.7); line-height:1.6; }
+.dest-icon {
+position:absolute; top:24px; right:24px; font-size:36px;
+filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+
+/* ─── TESTIMONIAL ─── */
+#testimonial {
+background:var(–cream);
+text-align:center;
+}
+.testimonial-wrap {
+max-width:780px; margin:0 auto;
+}
+.quote-mark {
+font-family:‘Cormorant Garamond’; font-size:120px; font-weight:300;
+color:var(–gold); opacity:0.3; line-height:0.8; margin-bottom:20px;
+display:block;
+}
+.testimonial-text {
+font-family:‘Noto Serif SC’; font-size:20px; font-weight:300;
+color:var(–navy); line-height:1.9; margin-bottom:36px;
+}
+.testimonial-author {
+display:flex; align-items:center; justify-content:center; gap:16px;
+}
+.author-avatar {
+width:48px; height:48px; border-radius:50%;
+background:linear-gradient(135deg, var(–blue), var(–blue2));
+display:flex; align-items:center; justify-content:center;
+font-size:20px;
+}
+.author-name {
+font-family:‘Noto Serif SC’; font-size:14px; font-weight:600; color:var(–navy);
+}
+.author-title { font-size:12px; color:var(–muted); margin-top:2px; }
+.testimonial-dots {
+display:flex; justify-content:center; gap:8px; margin-top:48px;
+}
+.tdot {
+width:8px; height:8px; border-radius:50%; background:var(–light); cursor:pointer;
+transition:background 0.2s;
+}
+.tdot.active { background:var(–gold); }
+
+/* ─── PRICING ─── */
+#pricing {
+background:var(–white);
+}
+.pricing-grid {
+display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+max-width:1000px;
+}
+.price-card {
+border:1px solid var(–light); border-radius:12px;
+padding:40px 32px; position:relative; transition:all 0.3s;
+}
+.price-card:hover { transform:translateY(-4px); box-shadow:0 24px 48px rgba(27,79,140,0.1); }
+.price-card.featured {
+background:linear-gradient(145deg, var(–navy) 0%, var(–blue) 100%);
+border-color:transparent;
+box-shadow:0 24px 60px rgba(27,79,140,0.25);
+}
+.price-badge {
+position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+background:var(–gold); color:var(–navy);
+font-family:‘Noto Sans SC’; font-size:10px; font-weight:500;
+letter-spacing:2px; padding:4px 16px; border-radius:20px;
+white-space:nowrap;
+}
+.price-name {
+font-family:‘Noto Serif SC’; font-size:16px; font-weight:600;
+color:var(–navy); margin-bottom:6px;
+}
+.price-card.featured .price-name { color:var(–white); }
+.price-name-en {
+font-family:‘Cormorant Garamond’; font-size:13px; font-style:italic;
+color:var(–muted); margin-bottom:28px; display:block;
+}
+.price-card.featured .price-name-en { color:rgba(255,255,255,0.5); }
+.price-amount {
+font-family:‘Cormorant Garamond’; font-size:52px; font-weight:300;
+color:var(–navy); line-height:1;
+}
+.price-card.featured .price-amount { color:var(–white); }
+.price-currency { font-size:22px; vertical-align:super; }
+.price-period {
+font-family:‘DM Sans’; font-size:13px; color:var(–muted); margin-bottom:32px;
+}
+.price-card.featured .price-period { color:rgba(255,255,255,0.5); }
+.price-list { list-style:none; margin-bottom:36px; }
+.price-list li {
+font-size:13px; color:#4a5a6c; padding:9px 0;
+border-bottom:1px solid var(–light);
+display:flex; align-items:center; gap:10px;
+}
+.price-card.featured .price-list li { color:rgba(255,255,255,0.75); border-color:rgba(255,255,255,0.1); }
+.price-list li::before {
+content:‘✓’; color:var(–gold); font-weight:700; flex-shrink:0;
+}
+.btn-price {
+width:100%; padding:13px; border-radius:6px; border:none;
+font-family:‘DM Sans’; font-size:14px; font-weight:500; cursor:pointer;
+transition:all 0.25s; text-align:center; display:block; text-decoration:none;
+}
+.btn-price-outline {
+background:transparent; color:var(–blue); border:1.5px solid var(–light);
+}
+.btn-price-outline:hover { border-color:var(–blue); background:var(–gray); }
+.btn-price-gold {
+background:var(–gold); color:var(–navy);
+}
+.btn-price-gold:hover { background:var(–gold2); box-shadow:0 8px 20px rgba(201,149,42,0.3); }
+
+/* ─── CONTACT ─── */
+#contact {
+background:linear-gradient(160deg, var(–navy) 0%, #0e2240 100%);
+position:relative; overflow:hidden;
+}
+#contact::after {
+content:’’; position:absolute; top:-200px; right:-200px;
+width:600px; height:600px; border-radius:50%;
+background:radial-gradient(circle, rgba(201,149,42,0.08) 0%, transparent 70%);
+pointer-events:none;
+}
+.contact-grid {
+display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;
+}
+.contact-left {}
+#contact .section-h2 { color:var(–white); }
+#contact .section-sub { color:rgba(255,255,255,0.4); }
+.contact-info { margin-top:48px; display:flex; flex-direction:column; gap:24px; }
+.contact-item {
+display:flex; align-items:center; gap:16px;
+}
+.contact-icon {
+width:44px; height:44px; border-radius:8px;
+background:rgba(201,149,42,0.12); border:1px solid rgba(201,149,42,0.2);
+display:flex; align-items:center; justify-content:center; font-size:18px;
+flex-shrink:0;
+}
+.contact-label {
+font-family:‘Noto Sans SC’; font-size:10px; font-weight:300;
+color:rgba(201,149,42,0.7); letter-spacing:2px; margin-bottom:3px;
+}
+.contact-val {
+font-size:14px; color:rgba(255,255,255,0.85);
+}
+.contact-form {
+background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+border-radius:16px; padding:40px;
+}
+.form-row { margin-bottom:20px; }
+.form-label {
+font-family:‘Noto Sans SC’; font-size:11px; color:rgba(255,255,255,0.5);
+letter-spacing:1px; display:block; margin-bottom:8px;
+}
+.form-input, .form-select, .form-textarea {
+width:100%; background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.1); border-radius:6px;
+padding:12px 16px; color:var(–white);
+font-family:‘DM Sans’; font-size:14px;
+transition:border-color 0.2s; outline:none;
+}
+.form-input::placeholder, .form-textarea::placeholder { color:rgba(255,255,255,0.25); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+border-color:rgba(201,149,42,0.4);
+background:rgba(255,255,255,0.08);
+}
+.form-select { appearance:none; cursor:pointer; }
+.form-select option { background:var(–navy); color:var(–white); }
+.form-textarea { resize:vertical; min-height:100px; }
+.form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.btn-submit {
+width:100%; padding:14px; border-radius:6px; border:none;
+background:var(–gold); color:var(–navy);
+font-family:‘DM Sans’; font-size:15px; font-weight:500;
+cursor:pointer; transition:all 0.25s; margin-top:8px;
+}
+.btn-submit:hover { background:var(–gold2); transform:translateY(-1px); box-shadow:0 8px 24px rgba(201,149,42,0.3); }
+
+/* ─── FOOTER ─── */
+footer {
+background:#060f1c;
+padding:60px 6% 36px;
+border-top:1px solid rgba(201,149,42,0.1);
+}
+.footer-top {
+display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px;
+margin-bottom:48px;
+}
+.footer-brand-name {
+font-family:‘Cormorant Garamond’; font-size:22px; font-weight:300;
+color:var(–white); margin-bottom:4px;
+}
+.footer-brand-zh {
+font-family:‘Noto Serif SC’; font-size:11px; font-weight:300;
+color:rgba(201,149,42,0.6); letter-spacing:3px; margin-bottom:18px;
+}
+.footer-brand-desc {
+font-size:13px; line-height:1.85; color:rgba(255,255,255,0.4);
+max-width:280px;
+}
+.footer-col-title {
+font-family:‘Noto Serif SC’; font-size:12px; font-weight:600;
+color:rgba(201,149,42,0.8); letter-spacing:2px;
+margin-bottom:20px; text-transform:uppercase;
+}
+.footer-links { list-style:none; }
+.footer-links li { margin-bottom:10px; }
+.footer-links a {
+font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none;
+transition:color 0.2s;
+}
+.footer-links a:hover { color:rgba(255,255,255,0.8); }
+.footer-bottom {
+border-top:1px solid rgba(255,255,255,0.06);
+padding-top:28px;
+display:flex; justify-content:space-between; align-items:center;
+}
+.footer-copy {
+font-size:12px; color:rgba(255,255,255,0.3);
+}
+.footer-legal {
+display:flex; gap:24px;
+}
+.footer-legal a {
+font-size:12px; color:rgba(255,255,255,0.3); text-decoration:none;
+transition:color 0.2s;
+}
+.footer-legal a:hover { color:rgba(255,255,255,0.6); }
+
+/* ─── MOBILE NAV TOGGLE ─── */
+.nav-toggle {
+display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px;
+}
+.nav-toggle span {
+display:block; width:24px; height:2px; background:var(–white);
+border-radius:2px; transition:all 0.3s;
+}
+
+/* ─── ANIMATIONS ─── */
+.fade-up {
+opacity:0; transform:translateY(30px);
+transition:opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible { opacity:1; transform:translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+.services-grid { grid-template-columns:repeat(2,1fr); }
+.process-grid { grid-template-columns:repeat(2,1fr); gap:40px; }
+.process-grid::before { display:none; }
+.footer-top { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:768px){
+nav { padding:0 5%; }
+.nav-links { display:none; }
+.nav-toggle { display:flex; }
+#hero, #about, #services, #process, #destinations, #testimonial, #pricing, #contact { padding:70px 5%; }
+#about { grid-template-columns:1fr; gap:40px; }
+.hero-stats { display:none; }
+.services-grid, .dest-grid, .pricing-grid { grid-template-columns:1fr; }
+.contact-grid { grid-template-columns:1fr; gap:40px; }
+.footer-top { grid-template-columns:1fr; gap:32px; }
+.footer-bottom { flex-direction:column; gap:16px; text-align:center; }
+.form-row-2 { grid-template-columns:1fr; }
+.about-visual { display:none; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="17" stroke="#C9952A" stroke-width="0.8" opacity="0.5"/>
+        <path d="M18 4 L18 32 M4 18 L32 18" stroke="#C9952A" stroke-width="0.6" opacity="0.35"/>
+        <circle cx="18" cy="18" r="6" fill="none" stroke="#C9952A" stroke-width="1.2"/>
+        <circle cx="18" cy="18" r="2.5" fill="#C9952A"/>
+        <path d="M4 18 Q18 8 32 18" stroke="#C9952A" stroke-width="0.8" fill="none" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="nav-brand">
+      <div class="nav-en">Aurora Bridge Health</div>
+      <div class="nav-zh">桥健康咨询</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">关于我们</a></li>
+    <li><a href="#services">服务项目</a></li>
+    <li><a href="#process">服务流程</a></li>
+    <li><a href="#destinations">目的地</a></li>
+    <li><a href="#pricing">收费方案</a></li>
+    <li><a href="#contact" class="nav-cta">立即咨询</a></li>
+  </ul>
+  <div class="nav-toggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      <span>加拿大注册跨境健康顾问机构</span>
+    </div>
+    <h1 class="hero-h1">
+      Bridging Your<br>
+      Health, Across<br>
+      <em>Two Worlds.</em>
+    </h1>
+    <span class="hero-h1-zh">连接加拿大与中国的健康桥梁</span>
+    <p class="hero-desc">
+      专为海外华人提供一站式跨境医疗旅游顾问服务。<br>
+      从高端体检、干细胞抗衰，到父母就医陪同、候鸟养老规划——<br>
+      无论您在多伦多还是温哥华，我们都是您回国就医最可靠的伙伴。
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">免费咨询 →</a>
+      <a href="#services" class="btn-outline">了解服务</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">200<span>+</span></div>
+      <div class="stat-label">服务家庭</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5<span>年</span></div>
+      <div class="stat-label">行业经验</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">客户满意度</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+
+<section id="about">
+  <div class="about-visual fade-up">
+    <div class="about-card-main">
+      <div class="about-avatar-label">Aurora Wang</div>
+      <div class="about-avatar-title">创始人 · 跨境健康顾问 · 多伦多</div>
+      <div class="about-avatar-desc">
+        拥有加拿大银行金融服务背景，因亲身经历海外华人在跨国就医上的困境，
+        转型创办 Aurora Bridge Health。<br><br>
+        我懂两边的语言，也懂两边的处境——这是我天然的优势，也是我的责任。
+      </div>
+    </div>
+    <div class="about-card-accent">
+      <div class="about-card-accent-num">CAD</div>
+      <div class="about-card-accent-label">加拿大注册</div>
+    </div>
+  </div>
+  <div class="about-text fade-up">
+    <div class="section-tag">
+      <div class="section-tag-line"></div>
+      <span>关于我们</span>
+    </div>
+    <h2 class="section-h2">我们在<em>两个世界</em>之间</h2>
+    <p class="section-sub">About Aurora Bridge Health</p>
+    <p class="about-p">
+      Aurora Bridge Health（桥健康咨询）是一家注册于加拿大安大略省的跨境医疗旅游顾问公司，
+      专注于连接加拿大华人与中国顶尖医疗健康资源。
+    </p>
+    <p class="about-p">
+      我们的合作伙伴包括秦皇岛北戴河海吉雅医疗机构及国内多家三甲医院绿通资源，
+      为海外华人提供从预约就医到全程陪同的一站式服务。
+    </p>
+    <p class="about-p">
+      我们不只是安排检查——我们帮您把"不知道该怎么办"变成"我已经安排好了"。
+    </p>
+    <div class="about-values">
+      <div class="value-item">
+        <div class="value-icon">🔒</div>
+        <div class="value-title">透明诚信</div>
+        <div class="value-desc">透明报价，不做隐性回扣，只推适合您的方案</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🌉</div>
+        <div class="value-title">双向连接</div>
+        <div class="value-desc">深耕加中两地，打通信息与资源壁垒</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">👩‍⚕️</div>
+        <div class="value-title">专业评估</div>
+        <div class="value-desc">只与正规认证机构合作，资质可查可验</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">❤️</div>
+        <div class="value-title">长期陪伴</div>
+        <div class="value-desc">不是一次性交易，是您家庭的长期健康伙伴</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+
+<section id="services">
+  <div class="section-tag fade-up">
+    <div class="section-tag-line"></div>
+    <span>服务项目</span>
+  </div>
+  <h2 class="section-h2 fade-up">我们能为您做<em>什么</em></h2>
+  <p class="section-sub fade-up">Our Services</p>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-num">01</div>
+      <span class="service-icon">🏥</span>
+      <div class="service-title">高端体检安排</div>
+      <span class="service-title-en">Premium Health Screening</span>
+      <p class="service-desc">根据您的年龄、家族史和健康状况，定制全面防癌体检方案，安排国内顶级机构绿色通道，提供报告解读服务。</p>
+      <ul class="service-items">
+        <li>低剂量肺CT · 胃肠镜</li>
+        <li>肿瘤标志物全套检测</li>
+        <li>颈动脉超声 · 骨密度</li>
+        <li>全程报告中英文解读</li>
+      </ul>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">02</div>
+      <span class="service-icon">🧬</span>
+      <div class="service-title">干细胞抗衰咨询</div>
+      <span class="service-title-en">Stem Cell & Anti-Aging</span>
+      <p class="service-desc">专业评估您是否适合干细胞疗程，推荐经国家正规备案的机构，安排北戴河海吉雅等合作机构全程服务。</p>
+      <ul class="service-items">
+        <li>适应症专业评估</li>
+        <li>正规备案机构推荐</li>
+        <li>疗程全程跟进</li>
+        <li>效果随访管理</li>
+      </ul>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">03</div>
+      <span class="service-icon">👨‍👩‍👧</span>
+      <div class="service-title">父母就医协调</div>
+      <span class="service-title-en">Parent Medical Coordination</span>
+      <p class="service-desc">帮助您在加拿大的您，为国内父母安排就医全程。从预约挂号到陪同检查，让您安心。</p>
+      <ul class="service-items">
+        <li>三甲医院绿色通道预约</li>
+        <li>本地联络人陪同就医</li>
+        <li>病历整理与翻译</li>
+        <li>紧急情况24小时响应</li>
+      </ul>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">04</div>
+      <span class="service-icon">🌴</span>
+      <div class="service-title">候鸟养老规划</div>
+      <span class="service-title-en">Migratory Retirement Planning</span>
+      <p class="service-desc">为退休华人设计秦皇岛·三亚·多伦多候鸟式健康养老方案，兼顾医疗资源、生活成本与家庭团聚。</p>
+      <ul class="service-items">
+        <li>两地健康管理体系建立</li>
+        <li>秦皇岛 / 三亚资源对接</li>
+        <li>年度健康计划制定</li>
+        <li>家庭养老方案设计</li>
+      </ul>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">05</div>
+      <span class="service-icon">✈️</span>
+      <div class="service-title">回国就医全程管家</div>
+      <span class="service-title-en">Full-Service Medical Concierge</span>
+      <p class="service-desc">从出发前的行程规划，到回加后的报告解读，提供完整的一站式就医管家服务，让您的回国就医之旅顺畅无忧。</p>
+      <ul class="service-items">
+        <li>行前准备与资料整理</li>
+        <li>机票 · 酒店 · 交通协调</li>
+        <li>全程医疗翻译陪同</li>
+        <li>回国后持续跟进</li>
+      </ul>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">06</div>
+      <span class="service-icon">📋</span>
+      <div class="service-title">年度家庭健康管家</div>
+      <span class="service-title-en">Annual Family Health Retainer</span>
+      <p class="service-desc">订阅制长期顾问服务，覆盖您与伴侣及国内父母，全年健康管理、按需响应，成为您家庭的专属健康伙伴。</p>
+      <ul class="service-items">
+        <li>每月一次健康顾问咨询</li>
+        <li>家庭健康档案全年管理</li>
+        <li>每年最多2次就医安排</li>
+        <li>紧急情况优先响应</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS ═══ -->
+
+<section id="process">
+  <div class="section-tag fade-up">
+    <div class="section-tag-line"></div>
+    <span>服务流程</span>
+  </div>
+  <h2 class="section-h2 fade-up">四步<em>轻松开始</em></h2>
+  <p class="section-sub fade-up" style="color:rgba(255,255,255,0.35);">How It Works</p>
+  <div class="process-grid">
+    <div class="process-step fade-up">
+      <div class="step-num-wrap"><div class="step-num">01</div></div>
+      <div class="step-title">免费初步咨询</div>
+      <div class="step-desc">微信或视频，15分钟了解您的需求、健康状况和预算，完全无压力。</div>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num-wrap"><div class="step-num">02</div></div>
+      <div class="step-title">定制专属方案</div>
+      <div class="step-desc">根据咨询结果，24小时内提供定制化方案和透明报价，供您选择。</div>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num-wrap"><div class="step-num">03</div></div>
+      <div class="step-title">全程安排跟进</div>
+      <div class="step-desc">预约机构、协调行程、陪同就医，全程我们负责，您只需安心出发。</div>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num-wrap"><div class="step-num">04</div></div>
+      <div class="step-title">报告解读回访</div>
+      <div class="step-desc">回加后为您解读检查报告，制定后续健康管理建议，持续陪伴。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DESTINATIONS ═══ -->
+
+<section id="destinations">
+  <div class="section-tag fade-up">
+    <div class="section-tag-line"></div>
+    <span>核心目的地</span>
+  </div>
+  <h2 class="section-h2 fade-up">精选<em>就医养生</em>目的地</h2>
+  <p class="section-sub fade-up">Our Destinations</p>
+  <div class="dest-grid">
+    <div class="dest-card fade-up">
+      <div class="dest-bg"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-icon">🌊</div>
+      <div class="dest-content">
+        <span class="dest-tag">首选合作机构</span>
+        <span class="dest-name">秦皇岛 · 北戴河</span>
+        <div class="dest-desc">北戴河海吉雅医疗 · 海边养生 · 高端体检 · 干细胞抗衰<br>年均优良天数320天，中国最宜居养老城市之一</div>
+      </div>
+    </div>
+    <div class="dest-card fade-up">
+      <div class="dest-bg"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-icon">🏙️</div>
+      <div class="dest-content">
+        <span class="dest-tag">医疗中心</span>
+        <span class="dest-name">北京 · 上海</span>
+        <div class="dest-desc">协和 · 301 · 复旦附属 · 顶级三甲绿通<br>复杂疾病确诊、专科手术、精准医疗首选</div>
+      </div>
+    </div>
+    <div class="dest-card fade-up">
+      <div class="dest-bg"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-icon">🌴</div>
+      <div class="dest-content">
+        <span class="dest-tag">冬季首选</span>
+        <span class="dest-name">三亚 · 海南</span>
+        <div class="dest-desc">冬季候鸟养老 · 康复疗养 · 中医调理<br>全年气温25°C+ · 远离多伦多严寒</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIAL ═══ -->
+
+<section id="testimonial">
+  <div class="testimonial-wrap fade-up">
+    <div class="section-tag" style="justify-content:center;">
+      <div class="section-tag-line"></div>
+      <span>客户故事</span>
+      <div class="section-tag-line"></div>
+    </div>
+    <span class="quote-mark">"</span>
+    <p class="testimonial-text" id="testimonialText">
+      Aurora帮我安排了妈妈在秦皇岛的全面体检，发现了颈动脉斑块，早期干预了。她跟我说：「原来我的孩子一直在想着我。」那个表情，是我多年没见过的骄傲。谢谢Aurora，你帮的不只是我妈妈，是我。
+    </p>
+    <div class="testimonial-author">
+      <div class="author-avatar">👩</div>
+      <div>
+        <div class="author-name" id="authorName">陈女士</div>
+        <div class="author-title" id="authorTitle">多伦多 · 移民14年</div>
+      </div>
+    </div>
+    <div class="testimonial-dots">
+      <div class="tdot active" onclick="setTestimonial(0)"></div>
+      <div class="tdot" onclick="setTestimonial(1)"></div>
+      <div class="tdot" onclick="setTestimonial(2)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+
+<section id="pricing">
+  <div class="section-tag fade-up">
+    <div class="section-tag-line"></div>
+    <span>收费方案</span>
+  </div>
+  <h2 class="section-h2 fade-up">透明<em>定价</em>，无隐藏费用</h2>
+  <p class="section-sub fade-up">Pricing Plans</p>
+  <div class="pricing-grid">
+    <div class="price-card fade-up">
+      <div class="price-name">单次顾问咨询</div>
+      <span class="price-name-en">One-Time Consultation</span>
+      <div class="price-amount"><span class="price-currency">$</span>150</div>
+      <div class="price-period">CAD · 起 / 次</div>
+      <ul class="price-list">
+        <li>60分钟深度咨询</li>
+        <li>健康需求评估报告</li>
+        <li>机构推荐与方案建议</li>
+        <li>微信后续跟进支持</li>
+      </ul>
+      <a href="#contact" class="btn-price btn-price-outline">预约咨询</a>
+    </div>
+    <div class="price-card featured fade-up">
+      <div class="price-badge">最受欢迎</div>
+      <div class="price-name">家庭年度管家</div>
+      <span class="price-name-en">Annual Family Retainer</span>
+      <div class="price-amount"><span class="price-currency">$</span>2,800</div>
+      <div class="price-period">CAD / 年 · 含父母</div>
+      <ul class="price-list">
+        <li>每月一次健康顾问咨询</li>
+        <li>家庭健康档案全年管理</li>
+        <li>每年最多2次回国就医安排</li>
+        <li>父母就医远程协调（不限次）</li>
+        <li>24小时紧急咨询响应</li>
+        <li>年度健康总结报告</li>
+        <li>合作机构专属优先通道</li>
+      </ul>
+      <a href="#contact" class="btn-price btn-price-gold">立即订阅</a>
+    </div>
+    <div class="price-card fade-up">
+      <div class="price-name">回国就医管家</div>
+      <span class="price-name-en">Medical Trip Concierge</span>
+      <div class="price-amount"><span class="price-currency">$</span>500</div>
+      <div class="price-period">CAD · 起 / 次</div>
+      <ul class="price-list">
+        <li>行前全程准备协助</li>
+        <li>机构预约与绿通安排</li>
+        <li>在华全程跟进支持</li>
+        <li>检查报告解读服务</li>
+        <li>回国后健康建议跟进</li>
+      </ul>
+      <a href="#contact" class="btn-price btn-price-outline">了解详情</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-left fade-up">
+      <div class="section-tag">
+        <div class="section-tag-line"></div>
+        <span style="color:rgba(201,149,42,0.8)">联系我们</span>
+      </div>
+      <h2 class="section-h2">有牵挂，<em style="color:var(--gold)">来聊聊</em></h2>
+      <p class="section-sub">Get In Touch</p>
+      <p style="font-size:15px;line-height:1.9;color:rgba(255,255,255,0.55);max-width:420px;">
+        不一定要马上做决定，先告诉我您的情况。<br>
+        我会在24小时内回复，为您提供最适合的建议。
+      </p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div>
+            <div class="contact-label">微信 WeChat</div>
+            <div class="contact-val">Aurora_BridgeHealth</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📕</div>
+          <div>
+            <div class="contact-label">小红书</div>
+            <div class="contact-val">加拿大Aurora健康生活</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-val">aurorabridgehealthca@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">总部</div>
+            <div class="contact-val">Toronto, Ontario, Canada</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form fade-up">
+      <div class="form-row-2">
+        <div class="form-row">
+          <label class="form-label">您的姓名</label>
+          <input class="form-input" type="text" placeholder="王女士 / Mr. Li">
+        </div>
+        <div class="form-row">
+          <label class="form-label">所在城市</label>
+          <input class="form-input" type="text" placeholder="Toronto / Vancouver">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">联系方式（微信 / Email）</label>
+        <input class="form-input" type="text" placeholder="微信号或邮箱">
+      </div>
+      <div class="form-row">
+        <label class="form-label">感兴趣的服务</label>
+        <select class="form-select form-input">
+          <option value="">请选择 —</option>
+          <option>高端体检安排</option>
+          <option>干细胞抗衰咨询</option>
+          <option>父母就医协调</option>
+          <option>候鸟养老规划</option>
+          <option>回国就医全程管家</option>
+          <option>年度家庭健康管家</option>
+          <option>其他 / 不确定</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">简单描述您的需求</label>
+        <textarea class="form-textarea" placeholder="例如：我妈妈在秦皇岛，最近身体不舒服，想帮她安排一次全面体检……"></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitForm()">发送咨询 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Aurora Bridge Health</div>
+      <div class="footer-brand-zh">桥健康咨询</div>
+      <p class="footer-brand-desc">
+        连接加拿大与中国的跨境健康顾问机构。<br>
+        注册于加拿大安大略省，服务全加拿大华人家庭。
+      </p>
+    </div>
+    <div>
+      <div class="footer-col-title">服务项目</div>
+      <ul class="footer-links">
+        <li><a href="#services">高端体检安排</a></li>
+        <li><a href="#services">干细胞抗衰</a></li>
+        <li><a href="#services">父母就医协调</a></li>
+        <li><a href="#services">候鸟养老规划</a></li>
+        <li><a href="#services">年度健康管家</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">目的地</div>
+      <ul class="footer-links">
+        <li><a href="#destinations">秦皇岛 · 北戴河</a></li>
+        <li><a href="#destinations">北京 · 协和 · 301</a></li>
+        <li><a href="#destinations">上海 · 复旦附属</a></li>
+        <li><a href="#destinations">三亚 · 海南</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">联系我们</div>
+      <ul class="footer-links">
+        <li><a href="#">微信：Aurora_BridgeHealth</a></li>
+        <li><a href="#">小红书：加拿大Aurora健康生活</a></li>
+        <li><a href="#">aurorabridgehealthca@gmail.com</a></li>
+        <li><a href="#">Toronto, Ontario, Canada</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Aurora Bridge Health · 桥健康咨询. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="#">隐私政策</a>
+      <a href="#">免责声明</a>
+      <a href="#">服务条款</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting){
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ── NAV MOBILE ──
+function toggleNav(){
+  const links = document.querySelector('.nav-links');
+  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+  links.style.flexDirection = 'column';
+  links.style.position = 'absolute';
+  links.style.top = '70px';
+  links.style.left = '0'; links.style.right = '0';
+  links.style.background = 'rgba(11,29,51,0.98)';
+  links.style.padding = '20px 6%';
+  links.style.borderBottom = '1px solid rgba(201,149,42,0.15)';
+}
+
+// ── TESTIMONIALS ──
+const testimonials = [
+  {
+    text:'Aurora帮我安排了妈妈在秦皇岛的全面体检，发现了颈动脉斑块，早期干预了。她跟我说：「原来我的孩子一直在想着我。」那个表情，是我多年没见过的骄傲。谢谢Aurora，你帮的不只是我妈妈，是我。',
+    name:'陈女士', title:'多伦多 · 移民14年'
+  },
+  {
+    text:'46岁，肚子不舒服，在加拿大等专科要等10个月。Aurora帮我7天在国内做完了所有检查，发现了慢性胃炎和良性息肉，早发现早处理。整个过程费用比加拿大私立省了一半，效率快了不知道多少倍。',
+    name:'李先生', title:'多伦多 · IT工程师'
+  },
+  {
+    text:'我55岁，每年在加拿大体检都说正常。Aurora建议我回国做了一次全面高端体检，发现了甲状腺结节4级。现在在密切随访中，庆幸发现得早。这笔钱花得太值了。',
+    name:'王女士', title:'温哥华 · 移民18年'
+  }
+];
+function setTestimonial(i){
+  document.getElementById('testimonialText').textContent = testimonials[i].text;
+  document.getElementById('authorName').textContent = testimonials[i].name;
+  document.getElementById('authorTitle').textContent = testimonials[i].title;
+  document.querySelectorAll('.tdot').forEach((d,j) => d.classList.toggle('active', j===i));
+}
+let tIdx = 0;
+setInterval(() => { tIdx = (tIdx+1)%3; setTestimonial(tIdx); }, 5000);
+
+// ── FORM SUBMIT ──
+function submitForm(){
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '✓ 已发送！我们将在24小时内与您联系';
+  btn.style.background = '#27ae60';
+  setTimeout(() => {
+    btn.textContent = '发送咨询 →';
+    btn.style.background = '';
+  }, 4000);
+}
+
+// ── NAV SCROLL EFFECT ──
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.height = window.scrollY > 50 ? '60px' : '70px';
+});
+</script>
+
+</body>
+</html>
