@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora Bridge Health · 桥健康咨询</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════
+RESET & BASE
+══════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body {
+font-family: ‘DM Sans’, ‘Noto Sans SC’, sans-serif;
+background: #ffffff;
+color: #1a2535;
+overflow-x: hidden;
+-webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width:100%; display:block; }
+
+/* ══════════════════════════════════════
+CSS VARIABLES
+══════════════════════════════════════ */
+:root {
+–navy:  #0b1d33;
+–blue:  #1B4F8C;
+–gold:  #C9952A;
+–gold2: #e8b84b;
+–cream: #faf8f4;
+–white: #ffffff;
+–gray:  #f4f6f9;
+–text:  #1a2535;
+–muted: #6b7a90;
+–light: #e2e8f0;
+}
+
+/* ══════════════════════════════════════
+NAV
+══════════════════════════════════════ */
+.nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 999;
+background: rgba(11,29,51,0.97);
+border-bottom: 1px solid rgba(201,149,42,0.2);
+padding: 0 24px;
+height: 64px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.nav-logo {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.nav-logo-svg {
+width: 32px;
+height: 32px;
+flex-shrink: 0;
+}
+.nav-logo-text {}
+.nav-logo-en {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 16px;
+font-weight: 600;
+color: #ffffff;
+letter-spacing: 0.5px;
+line-height: 1.1;
+display: block;
+}
+.nav-logo-zh {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 10px;
+font-weight: 300;
+color: rgba(201,149,42,0.8);
+letter-spacing: 3px;
+display: block;
+margin-top: 1px;
+}
+.nav-links {
+display: flex;
+align-items: center;
+gap: 28px;
+list-style: none;
+}
+.nav-links a {
+font-size: 13px;
+color: rgba(255,255,255,0.7);
+transition: color 0.2s;
+white-space: nowrap;
+}
+.nav-links a:hover { color: #ffffff; }
+.nav-btn {
+background: var(–gold) !important;
+color: var(–navy) !important;
+padding: 8px 20px;
+border-radius: 4px;
+font-weight: 500 !important;
+transition: background 0.2s !important;
+}
+.nav-btn:hover { background: var(–gold2) !important; }
+.nav-hamburger {
+display: none;
+flex-direction: column;
+gap: 5px;
+cursor: pointer;
+padding: 4px;
+background: none;
+border: none;
+}
+.nav-hamburger span {
+display: block;
+width: 22px;
+height: 2px;
+background: #ffffff;
+border-radius: 2px;
+}
+/* Mobile nav drawer */
+.nav-drawer {
+display: none;
+position: fixed;
+top: 64px; left: 0; right: 0;
+background: rgba(11,29,51,0.98);
+padding: 20px 24px 28px;
+z-index: 998;
+border-bottom: 1px solid rgba(201,149,42,0.15);
+}
+.nav-drawer.open { display: block; }
+.nav-drawer a {
+display: block;
+padding: 12px 0;
+color: rgba(255,255,255,0.75);
+font-size: 15px;
+border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.nav-drawer a:last-child { border: none; }
+.nav-drawer .nav-btn {
+margin-top: 16px;
+display: block;
+text-align: center;
+padding: 12px;
+border-radius: 6px;
+}
+
+/* ══════════════════════════════════════
+HERO
+══════════════════════════════════════ */
+.hero {
+min-height: 100vh;
+background: linear-gradient(155deg, #060f1c 0%, #0b1d33 45%, #102844 75%, #0d2040 100%);
+display: flex;
+align-items: center;
+position: relative;
+overflow: hidden;
+padding-top: 64px;
+}
+.hero-grid {
+position: absolute;
+inset: 0;
+background-image:
+linear-gradient(rgba(201,149,42,0.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(201,149,42,0.05) 1px, transparent 1px);
+background-size: 60px 60px;
+pointer-events: none;
+}
+.hero-orb {
+position: absolute;
+width: 500px;
+height: 500px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(27,79,140,0.25) 0%, transparent 70%);
+top: -100px;
+right: -150px;
+pointer-events: none;
+}
+.hero-inner {
+position: relative;
+z-index: 2;
+padding: 60px 24px 80px;
+width: 100%;
+max-width: 1100px;
+margin: 0 auto;
+}
+.hero-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(201,149,42,0.12);
+border: 1px solid rgba(201,149,42,0.3);
+padding: 6px 16px;
+border-radius: 20px;
+margin-bottom: 32px;
+}
+.hero-badge-dot {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background: var(–gold);
+flex-shrink: 0;
+}
+.hero-badge-text {
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+color: rgba(201,149,42,0.9);
+letter-spacing: 2px;
+}
+.hero-h1 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(42px, 8vw, 80px);
+font-weight: 300;
+color: #ffffff;
+line-height: 1.1;
+margin-bottom: 12px;
+}
+.hero-h1-gold {
+font-style: italic;
+color: var(–gold);
+}
+.hero-h1-zh {
+font-family: ‘Noto Serif SC’, serif;
+font-size: clamp(13px, 2vw, 17px);
+font-weight: 300;
+color: rgba(255,255,255,0.4);
+letter-spacing: 4px;
+display: block;
+margin-bottom: 28px;
+}
+.hero-desc {
+font-size: clamp(14px, 2vw, 16px);
+line-height: 1.9;
+color: rgba(255,255,255,0.65);
+max-width: 560px;
+margin-bottom: 44px;
+font-weight: 300;
+}
+.hero-btns {
+display: flex;
+gap: 14px;
+flex-wrap: wrap;
+}
+.btn-gold {
+display: inline-block;
+background: var(–gold);
+color: var(–navy);
+padding: 13px 30px;
+border-radius: 5px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+font-weight: 500;
+transition: background 0.25s, transform 0.2s;
+cursor: pointer;
+border: none;
+text-align: center;
+}
+.btn-gold:hover { background: var(–gold2); transform: translateY(-2px); }
+.btn-white {
+display: inline-block;
+background: transparent;
+color: #ffffff;
+padding: 13px 30px;
+border-radius: 5px;
+border: 1.5px solid rgba(255,255,255,0.3);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+font-weight: 400;
+transition: border-color 0.2s, background 0.2s;
+cursor: pointer;
+text-align: center;
+}
+.btn-white:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.05); }
+.hero-stats {
+display: flex;
+gap: 48px;
+margin-top: 60px;
+flex-wrap: wrap;
+}
+.hero-stat-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 40px;
+font-weight: 300;
+color: #ffffff;
+line-height: 1;
+}
+.hero-stat-num span { color: var(–gold); font-size: 24px; }
+.hero-stat-label {
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+color: rgba(255,255,255,0.4);
+letter-spacing: 2px;
+margin-top: 4px;
+}
+.hero-scroll {
+position: absolute;
+bottom: 28px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 6px;
+}
+.hero-scroll-text {
+font-size: 10px;
+letter-spacing: 3px;
+color: rgba(255,255,255,0.3);
+text-transform: uppercase;
+font-family: ‘DM Sans’, sans-serif;
+}
+.hero-scroll-line {
+width: 1px;
+height: 40px;
+background: linear-gradient(180deg, rgba(201,149,42,0.7), transparent);
+animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* ══════════════════════════════════════
+SECTION COMMON
+══════════════════════════════════════ */
+.section {
+padding: 80px 24px;
+}
+.section-inner {
+max-width: 1100px;
+margin: 0 auto;
+}
+.section-tag {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 16px;
+}
+.section-tag-line {
+width: 28px;
+height: 1.5px;
+background: var(–gold);
+flex-shrink: 0;
+}
+.section-tag-text {
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 11px;
+font-weight: 400;
+color: var(–gold);
+letter-spacing: 3px;
+text-transform: uppercase;
+}
+.section-h2 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(32px, 5vw, 50px);
+font-weight: 300;
+color: var(–navy);
+line-height: 1.2;
+margin-bottom: 8px;
+}
+.section-h2-em {
+font-style: italic;
+color: var(–blue);
+}
+.section-sub {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 12px;
+font-weight: 300;
+color: var(–muted);
+letter-spacing: 3px;
+margin-bottom: 48px;
+}
+
+/* ══════════════════════════════════════
+ABOUT
+══════════════════════════════════════ */
+.about-bg { background: var(–cream); }
+.about-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 64px;
+align-items: center;
+}
+.about-card {
+background: linear-gradient(140deg, var(–navy) 0%, var(–blue) 100%);
+border-radius: 14px;
+padding: 44px 36px;
+color: #ffffff;
+position: relative;
+overflow: hidden;
+}
+.about-card::after {
+content: ‘桥’;
+position: absolute;
+right: -16px;
+bottom: -48px;
+font-family: ‘Noto Serif SC’, serif;
+font-size: 180px;
+font-weight: 700;
+color: rgba(255,255,255,0.04);
+pointer-events: none;
+line-height: 1;
+}
+.about-card-badge {
+display: inline-block;
+background: rgba(201,149,42,0.2);
+border: 1px solid rgba(201,149,42,0.35);
+color: rgba(201,149,42,0.9);
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 10px;
+letter-spacing: 2px;
+padding: 5px 12px;
+border-radius: 20px;
+margin-bottom: 20px;
+}
+.about-card-name {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 30px;
+font-weight: 300;
+color: #ffffff;
+margin-bottom: 4px;
+}
+.about-card-title {
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+color: rgba(201,149,42,0.75);
+letter-spacing: 2px;
+margin-bottom: 20px;
+}
+.about-card-desc {
+font-size: 14px;
+line-height: 1.85;
+color: rgba(255,255,255,0.7);
+}
+.about-accent {
+position: absolute;
+bottom: -16px;
+right: -16px;
+background: var(–gold);
+border-radius: 10px;
+padding: 20px 24px;
+box-shadow: 0 16px 36px rgba(201,149,42,0.3);
+}
+.about-accent-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 30px;
+font-weight: 600;
+color: var(–navy);
+line-height: 1;
+}
+.about-accent-label {
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 10px;
+color: var(–navy);
+opacity: 0.65;
+letter-spacing: 2px;
+margin-top: 4px;
+}
+.about-p {
+font-size: 15px;
+line-height: 1.9;
+color: #3a4a5c;
+margin-bottom: 18px;
+}
+.about-values {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 14px;
+margin-top: 36px;
+}
+.value-box {
+background: #ffffff;
+border: 1px solid var(–light);
+border-radius: 10px;
+padding: 18px;
+transition: border-color 0.2s, transform 0.2s;
+}
+.value-box:hover { border-color: var(–gold); transform: translateY(-2px); }
+.value-icon { font-size: 20px; margin-bottom: 8px; }
+.value-title {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 13px;
+font-weight: 600;
+color: var(–navy);
+margin-bottom: 5px;
+}
+.value-desc { font-size: 12px; color: var(–muted); line-height: 1.6; }
+
+/* ══════════════════════════════════════
+SERVICES
+══════════════════════════════════════ */
+.services-bg { background: #ffffff; }
+.services-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+}
+.svc-card {
+border: 1.5px solid var(–light);
+border-radius: 12px;
+padding: 32px 24px;
+position: relative;
+overflow: hidden;
+transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+background: #ffffff;
+}
+.svc-card::after {
+content: ‘’;
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 3px;
+background: linear-gradient(90deg, var(–blue), var(–gold));
+transform: scaleX(0);
+transform-origin: left;
+transition: transform 0.35s;
+}
+.svc-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 16px 40px rgba(27,79,140,0.1);
+border-color: rgba(27,79,140,0.15);
+}
+.svc-card:hover::after { transform: scaleX(1); }
+.svc-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 44px;
+font-weight: 300;
+color: #edf0f5;
+line-height: 1;
+margin-bottom: 16px;
+}
+.svc-icon { font-size: 26px; margin-bottom: 14px; display: block; }
+.svc-title {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 15px;
+font-weight: 600;
+color: var(–navy);
+margin-bottom: 6px;
+}
+.svc-title-en {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 12px;
+font-style: italic;
+color: var(–blue);
+display: block;
+margin-bottom: 14px;
+}
+.svc-desc {
+font-size: 13px;
+line-height: 1.8;
+color: var(–muted);
+margin-bottom: 16px;
+}
+.svc-list {
+list-style: none;
+border-top: 1px solid var(–light);
+padding-top: 12px;
+}
+.svc-list li {
+font-size: 12px;
+color: var(–muted);
+padding: 5px 0;
+display: flex;
+align-items: center;
+gap: 8px;
+border-bottom: 1px solid var(–light);
+}
+.svc-list li:last-child { border: none; }
+.svc-list-dot {
+width: 4px;
+height: 4px;
+border-radius: 50%;
+background: var(–gold);
+flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
+PROCESS (dark bg)
+══════════════════════════════════════ */
+.process-bg {
+background: linear-gradient(160deg, var(–navy) 0%, #102244 100%);
+position: relative;
+overflow: hidden;
+}
+.process-bg::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background-image: radial-gradient(rgba(201,149,42,0.06) 1px, transparent 1px);
+background-size: 36px 36px;
+pointer-events: none;
+}
+.process-bg .section-h2 { color: #ffffff; }
+.process-bg .section-sub { color: rgba(255,255,255,0.35); }
+.process-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 24px;
+position: relative;
+}
+.process-step { text-align: center; padding: 0 8px; }
+.step-circle {
+width: 72px;
+height: 72px;
+border-radius: 50%;
+border: 1.5px solid rgba(201,149,42,0.35);
+background: rgba(201,149,42,0.08);
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto 24px;
+transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.process-step:hover .step-circle {
+background: var(–gold);
+border-color: var(–gold);
+box-shadow: 0 0 28px rgba(201,149,42,0.4);
+}
+.step-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 26px;
+font-weight: 300;
+color: var(–gold);
+transition: color 0.3s;
+}
+.process-step:hover .step-num { color: var(–navy); }
+.step-title {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 14px;
+font-weight: 600;
+color: #ffffff;
+margin-bottom: 10px;
+}
+.step-desc {
+font-size: 13px;
+line-height: 1.75;
+color: rgba(255,255,255,0.5);
+}
+
+/* ══════════════════════════════════════
+DESTINATIONS
+══════════════════════════════════════ */
+.dest-bg { background: var(–gray); }
+.dest-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 18px;
+}
+.dest-card {
+border-radius: 12px;
+overflow: hidden;
+height: 280px;
+position: relative;
+}
+.dest-card-bg {
+position: absolute;
+inset: 0;
+transition: transform 0.5s ease;
+}
+.dest-card:hover .dest-card-bg { transform: scale(1.06); }
+.dest-1 .dest-card-bg { background: linear-gradient(150deg, #1a3a6c, #2a5a9c, #3a7ab8); }
+.dest-2 .dest-card-bg { background: linear-gradient(150deg, #1a5c3a, #2a7a50, #3a9a68); }
+.dest-3 .dest-card-bg { background: linear-gradient(150deg, #5c3a1a, #8a5a2a, #c0843c); }
+.dest-overlay {
+position: absolute;
+inset: 0;
+background: linear-gradient(0deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.08) 55%);
+}
+.dest-emoji {
+position: absolute;
+top: 20px;
+right: 20px;
+font-size: 32px;
+}
+.dest-content {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+padding: 24px;
+}
+.dest-badge {
+display: inline-block;
+background: rgba(201,149,42,0.85);
+color: var(–navy);
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 10px;
+letter-spacing: 1.5px;
+padding: 3px 10px;
+border-radius: 3px;
+margin-bottom: 8px;
+font-weight: 400;
+}
+.dest-name {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 24px;
+font-weight: 600;
+color: #ffffff;
+display: block;
+margin-bottom: 6px;
+}
+.dest-desc {
+font-size: 12px;
+color: rgba(255,255,255,0.7);
+line-height: 1.6;
+}
+
+/* ══════════════════════════════════════
+TESTIMONIAL
+══════════════════════════════════════ */
+.testi-bg { background: var(–cream); }
+.testi-wrap {
+max-width: 760px;
+margin: 0 auto;
+text-align: center;
+}
+.testi-quote-mark {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 100px;
+font-weight: 300;
+color: var(–gold);
+opacity: 0.25;
+line-height: 0.9;
+margin-bottom: 20px;
+display: block;
+}
+.testi-text {
+font-family: ‘Noto Serif SC’, serif;
+font-size: clamp(15px, 2vw, 19px);
+font-weight: 300;
+color: var(–navy);
+line-height: 1.95;
+margin-bottom: 32px;
+}
+.testi-author {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 14px;
+}
+.testi-avatar {
+width: 44px;
+height: 44px;
+border-radius: 50%;
+background: linear-gradient(135deg, var(–blue), #2d6fbe);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+flex-shrink: 0;
+}
+.testi-name {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 14px;
+font-weight: 600;
+color: var(–navy);
+text-align: left;
+}
+.testi-role {
+font-size: 12px;
+color: var(–muted);
+text-align: left;
+margin-top: 2px;
+}
+.testi-dots {
+display: flex;
+justify-content: center;
+gap: 8px;
+margin-top: 40px;
+}
+.tdot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background: var(–light);
+cursor: pointer;
+transition: background 0.25s;
+border: none;
+}
+.tdot.on { background: var(–gold); }
+
+/* ══════════════════════════════════════
+PRICING
+══════════════════════════════════════ */
+.pricing-bg { background: #ffffff; }
+.pricing-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+max-width: 960px;
+}
+.price-card {
+border: 1.5px solid var(–light);
+border-radius: 12px;
+padding: 36px 28px;
+position: relative;
+transition: transform 0.25s, box-shadow 0.25s;
+background: #ffffff;
+}
+.price-card:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(27,79,140,0.09); }
+.price-card.featured {
+background: linear-gradient(145deg, var(–navy), var(–blue));
+border-color: transparent;
+box-shadow: 0 20px 56px rgba(27,79,140,0.22);
+}
+.price-popular {
+position: absolute;
+top: -12px; left: 50%;
+transform: translateX(-50%);
+background: var(–gold);
+color: var(–navy);
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 1.5px;
+padding: 4px 16px;
+border-radius: 20px;
+white-space: nowrap;
+}
+.price-name {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 15px;
+font-weight: 600;
+color: var(–navy);
+margin-bottom: 4px;
+}
+.price-card.featured .price-name { color: #ffffff; }
+.price-name-en {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 12px;
+font-style: italic;
+color: var(–muted);
+display: block;
+margin-bottom: 24px;
+}
+.price-card.featured .price-name-en { color: rgba(255,255,255,0.45); }
+.price-amount {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 50px;
+font-weight: 300;
+color: var(–navy);
+line-height: 1;
+}
+.price-card.featured .price-amount { color: #ffffff; }
+.price-sup { font-size: 22px; vertical-align: super; }
+.price-period {
+font-size: 13px;
+color: var(–muted);
+margin-bottom: 28px;
+margin-top: 4px;
+}
+.price-card.featured .price-period { color: rgba(255,255,255,0.45); }
+.price-list {
+list-style: none;
+margin-bottom: 32px;
+}
+.price-list li {
+font-size: 13px;
+color: #4a5a6c;
+padding: 8px 0;
+border-bottom: 1px solid var(–light);
+display: flex;
+align-items: flex-start;
+gap: 8px;
+line-height: 1.5;
+}
+.price-card.featured .price-list li {
+color: rgba(255,255,255,0.75);
+border-color: rgba(255,255,255,0.1);
+}
+.price-list li::before {
+content: ‘✓’;
+color: var(–gold);
+font-weight: 700;
+flex-shrink: 0;
+margin-top: 1px;
+}
+.btn-price {
+display: block;
+width: 100%;
+padding: 13px;
+border-radius: 6px;
+border: none;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.25s;
+text-align: center;
+text-decoration: none;
+}
+.btn-price-outline {
+background: transparent;
+color: var(–blue);
+border: 1.5px solid var(–light);
+}
+.btn-price-outline:hover { border-color: var(–blue); background: var(–gray); }
+.btn-price-gold {
+background: var(–gold);
+color: var(–navy);
+}
+.btn-price-gold:hover { background: var(–gold2); box-shadow: 0 6px 18px rgba(201,149,42,0.3); }
+
+/* ══════════════════════════════════════
+CONTACT (dark)
+══════════════════════════════════════ */
+.contact-bg {
+background: linear-gradient(160deg, var(–navy) 0%, #0e2240 100%);
+}
+.contact-bg .section-h2 { color: #ffffff; }
+.contact-bg .section-sub { color: rgba(255,255,255,0.35); }
+.contact-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 64px;
+align-items: start;
+}
+.contact-desc {
+font-size: 15px;
+line-height: 1.9;
+color: rgba(255,255,255,0.55);
+max-width: 400px;
+margin-bottom: 40px;
+}
+.contact-items {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+.contact-item {
+display: flex;
+align-items: center;
+gap: 14px;
+}
+.contact-item-icon {
+width: 42px;
+height: 42px;
+border-radius: 8px;
+background: rgba(201,149,42,0.12);
+border: 1px solid rgba(201,149,42,0.22);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 17px;
+flex-shrink: 0;
+}
+.contact-item-label {
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 10px;
+font-weight: 300;
+color: rgba(201,149,42,0.7);
+letter-spacing: 2px;
+margin-bottom: 2px;
+}
+.contact-item-val {
+font-size: 14px;
+color: rgba(255,255,255,0.82);
+}
+/* Form */
+.contact-form-box {
+background: rgba(255,255,255,0.04);
+border: 1px solid rgba(255,255,255,0.09);
+border-radius: 14px;
+padding: 36px 32px;
+}
+.form-row { margin-bottom: 18px; }
+.form-row-2 {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 14px;
+margin-bottom: 18px;
+}
+.form-label {
+display: block;
+font-family: ‘Noto Sans SC’, sans-serif;
+font-size: 11px;
+font-weight: 300;
+color: rgba(255,255,255,0.45);
+letter-spacing: 1px;
+margin-bottom: 7px;
+}
+.form-input,
+.form-select,
+.form-textarea {
+width: 100%;
+background: rgba(255,255,255,0.06);
+border: 1px solid rgba(255,255,255,0.11);
+border-radius: 6px;
+padding: 11px 14px;
+color: #ffffff;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+transition: border-color 0.2s;
+outline: none;
+-webkit-appearance: none;
+appearance: none;
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: rgba(255,255,255,0.22); }
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus { border-color: rgba(201,149,42,0.5); }
+.form-select { cursor: pointer; }
+.form-select option { background: #0b1d33; color: #ffffff; }
+.form-textarea { resize: vertical; min-height: 90px; }
+.btn-submit {
+width: 100%;
+padding: 14px;
+border-radius: 6px;
+border: none;
+background: var(–gold);
+color: var(–navy);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 15px;
+font-weight: 500;
+cursor: pointer;
+transition: background 0.25s, transform 0.2s;
+margin-top: 4px;
+}
+.btn-submit:hover { background: var(–gold2); transform: translateY(-1px); }
+
+/* ══════════════════════════════════════
+FOOTER
+══════════════════════════════════════ */
+.footer {
+background: #050e1c;
+padding: 56px 24px 32px;
+border-top: 1px solid rgba(201,149,42,0.1);
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top {
+display: grid;
+grid-template-columns: 2fr 1fr 1fr 1fr;
+gap: 40px;
+margin-bottom: 44px;
+}
+.footer-brand-en {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 20px;
+font-weight: 300;
+color: #ffffff;
+margin-bottom: 3px;
+}
+.footer-brand-zh {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 10px;
+font-weight: 300;
+color: rgba(201,149,42,0.6);
+letter-spacing: 3px;
+margin-bottom: 16px;
+display: block;
+}
+.footer-brand-desc {
+font-size: 13px;
+line-height: 1.8;
+color: rgba(255,255,255,0.38);
+max-width: 260px;
+}
+.footer-col-title {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 11px;
+font-weight: 600;
+color: rgba(201,149,42,0.75);
+letter-spacing: 2px;
+text-transform: uppercase;
+margin-bottom: 18px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 9px; }
+.footer-links a {
+font-size: 13px;
+color: rgba(255,255,255,0.4);
+transition: color 0.2s;
+}
+.footer-links a:hover { color: rgba(255,255,255,0.75); }
+.footer-bottom {
+border-top: 1px solid rgba(255,255,255,0.06);
+padding-top: 24px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 12px;
+}
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.28); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 12px; color: rgba(255,255,255,0.28); transition: color 0.2s; }
+.footer-legal a:hover { color: rgba(255,255,255,0.55); }
+
+/* ══════════════════════════════════════
+SCROLL REVEAL
+══════════════════════════════════════ */
+.reveal {
+opacity: 0;
+transform: translateY(28px);
+transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.shown { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════
+RESPONSIVE — TABLET
+══════════════════════════════════════ */
+@media (max-width: 900px) {
+.nav-links { display: none; }
+.nav-hamburger { display: flex; }
+.about-grid { grid-template-columns: 1fr; gap: 36px; }
+.about-visual { display: none; }
+.services-grid { grid-template-columns: 1fr 1fr; }
+.process-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+.dest-grid { grid-template-columns: 1fr 1fr; }
+.pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+.contact-grid { grid-template-columns: 1fr; gap: 40px; }
+.footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+/* ══════════════════════════════════════
+RESPONSIVE — MOBILE
+══════════════════════════════════════ */
+@media (max-width: 600px) {
+.section { padding: 60px 20px; }
+.hero-inner { padding: 48px 20px 70px; }
+.hero-stats { gap: 28px; }
+.services-grid { grid-template-columns: 1fr; }
+.process-grid { grid-template-columns: 1fr 1fr; }
+.dest-grid { grid-template-columns: 1fr; }
+.about-values { grid-template-columns: 1fr; }
+.form-row-2 { grid-template-columns: 1fr; }
+.footer-top { grid-template-columns: 1fr; }
+.footer-bottom { flex-direction: column; text-align: center; }
+.hero-btns { flex-direction: column; }
+.btn-gold, .btn-white { width: 100%; text-align: center; }
+.contact-form-box { padding: 24px 20px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+
+<nav class="nav">
+  <div class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="15" stroke="#C9952A" stroke-width="0.8" opacity="0.5"/>
+      <path d="M16 3 L16 29 M3 16 L29 16" stroke="#C9952A" stroke-width="0.6" opacity="0.35"/>
+      <circle cx="16" cy="16" r="5.5" fill="none" stroke="#C9952A" stroke-width="1.2"/>
+      <circle cx="16" cy="16" r="2.2" fill="#C9952A"/>
+      <path d="M3 16 Q16 7 29 16" stroke="#C9952A" stroke-width="0.8" fill="none" opacity="0.5"/>
+    </svg>
+    <div class="nav-logo-text">
+      <span class="nav-logo-en">Aurora Bridge Health</span>
+      <span class="nav-logo-zh">桥健康咨询</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">关于我们</a></li>
+    <li><a href="#services">服务项目</a></li>
+    <li><a href="#process">服务流程</a></li>
+    <li><a href="#destinations">目的地</a></li>
+    <li><a href="#pricing">收费方案</a></li>
+    <li><a href="#contact" class="nav-btn">立即咨询</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleDrawer()" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="drawer">
+  <a href="#about" onclick="closeDrawer()">关于我们</a>
+  <a href="#services" onclick="closeDrawer()">服务项目</a>
+  <a href="#process" onclick="closeDrawer()">服务流程</a>
+  <a href="#destinations" onclick="closeDrawer()">目的地</a>
+  <a href="#pricing" onclick="closeDrawer()">收费方案</a>
+  <a href="#contact" class="nav-btn" onclick="closeDrawer()">立即咨询</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span class="hero-badge-text">加拿大注册跨境健康顾问机构</span>
+    </div>
+    <h1 class="hero-h1">
+      Bridging Your Health,<br>
+      Across <span class="hero-h1-gold">Two Worlds.</span>
+    </h1>
+    <span class="hero-h1-zh">连接加拿大与中国的健康桥梁</span>
+    <p class="hero-desc">
+      专为海外华人提供一站式跨境医疗旅游顾问服务。从高端体检、干细胞抗衰，到父母就医陪同、候鸟养老规划——无论您在多伦多还是温哥华，我们都是您回国就医最可靠的伙伴。
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-gold">免费咨询 →</a>
+      <a href="#services" class="btn-white">了解服务</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">200<span>+</span></div>
+        <div class="hero-stat-label">服务家庭</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">5<span>年</span></div>
+        <div class="hero-stat-label">行业经验</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">98<span>%</span></div>
+        <div class="hero-stat-label">客户满意度</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="hero-scroll-text">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+
+<section class="section about-bg" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual" style="position:relative;padding-bottom:40px;">
+        <div class="about-card reveal">
+          <div class="about-card-badge">创始人 · Founder</div>
+          <div class="about-card-name">Aurora Wang</div>
+          <div class="about-card-title">跨境健康顾问 · 多伦多</div>
+          <div class="about-card-desc">拥有加拿大银行金融服务背景，因亲身经历海外华人在跨国就医上的困境，转型创办 Aurora Bridge Health。<br><br>我懂两边的语言，也懂两边的处境——这是我天然的优势，也是我的责任。</div>
+        </div>
+        <div class="about-accent">
+          <div class="about-accent-num">CAD</div>
+          <div class="about-accent-label">加拿大注册</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="section-tag">
+          <div class="section-tag-line"></div>
+          <span class="section-tag-text">关于我们</span>
+        </div>
+        <h2 class="section-h2">我们在<span class="section-h2-em">两个世界</span>之间</h2>
+        <p class="section-sub">About Aurora Bridge Health</p>
+        <p class="about-p">Aurora Bridge Health（桥健康咨询）是一家注册于加拿大安大略省的跨境医疗旅游顾问公司，专注于连接加拿大华人与中国顶尖医疗健康资源。</p>
+        <p class="about-p">我们的合作伙伴包括秦皇岛北戴河海吉雅医疗机构及国内多家三甲医院绿通资源，为海外华人提供从预约就医到全程陪同的一站式服务。</p>
+        <p class="about-p">我们不只是安排检查——我们帮您把「不知道该怎么办」变成「我已经安排好了」。</p>
+        <div class="about-values">
+          <div class="value-box">
+            <div class="value-icon">🔒</div>
+            <div class="value-title">透明诚信</div>
+            <div class="value-desc">透明报价，不做隐性回扣，只推适合您的方案</div>
+          </div>
+          <div class="value-box">
+            <div class="value-icon">🌉</div>
+            <div class="value-title">双向连接</div>
+            <div class="value-desc">深耕加中两地，打通信息与资源壁垒</div>
+          </div>
+          <div class="value-box">
+            <div class="value-icon">👩‍⚕️</div>
+            <div class="value-title">专业评估</div>
+            <div class="value-desc">只与正规认证机构合作，资质可查可验</div>
+          </div>
+          <div class="value-box">
+            <div class="value-icon">❤️</div>
+            <div class="value-title">长期陪伴</div>
+            <div class="value-desc">不是一次性交易，是您家庭的长期健康伙伴</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+
+<section class="section services-bg" id="services">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="section-tag-line"></div>
+      <span class="section-tag-text">服务项目</span>
+    </div>
+    <h2 class="section-h2 reveal">我们能为您做<span class="section-h2-em">什么</span></h2>
+    <p class="section-sub reveal">Our Services</p>
+    <div class="services-grid">
+      <div class="svc-card reveal">
+        <div class="svc-num">01</div>
+        <span class="svc-icon">🏥</span>
+        <div class="svc-title">高端体检安排</div>
+        <span class="svc-title-en">Premium Health Screening</span>
+        <p class="svc-desc">根据您的年龄、家族史和健康状况，定制全面防癌体检方案，安排国内顶级机构绿色通道，提供报告解读服务。</p>
+        <ul class="svc-list">
+          <li><span class="svc-list-dot"></span>低剂量肺CT · 胃肠镜</li>
+          <li><span class="svc-list-dot"></span>肿瘤标志物全套检测</li>
+          <li><span class="svc-list-dot"></span>颈动脉超声 · 骨密度</li>
+          <li><span class="svc-list-dot"></span>全程报告中英文解读</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-num">02</div>
+        <span class="svc-icon">🧬</span>
+        <div class="svc-title">干细胞抗衰咨询</div>
+        <span class="svc-title-en">Stem Cell & Anti-Aging</span>
+        <p class="svc-desc">专业评估您是否适合干细胞疗程，推荐经国家正规备案的机构，安排北戴河海吉雅等合作机构全程服务。</p>
+        <ul class="svc-list">
+          <li><span class="svc-list-dot"></span>适应症专业评估</li>
+          <li><span class="svc-list-dot"></span>正规备案机构推荐</li>
+          <li><span class="svc-list-dot"></span>疗程全程跟进</li>
+          <li><span class="svc-list-dot"></span>效果随访管理</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-num">03</div>
+        <span class="svc-icon">👨‍👩‍👧</span>
+        <div class="svc-title">父母就医协调</div>
+        <span class="svc-title-en">Parent Medical Coordination</span>
+        <p class="svc-desc">帮助在加拿大的您，为国内父母安排就医全程。从预约挂号到陪同检查，让您安心无忧。</p>
+        <ul class="svc-list">
+          <li><span class="svc-list-dot"></span>三甲医院绿色通道预约</li>
+          <li><span class="svc-list-dot"></span>本地联络人陪同就医</li>
+          <li><span class="svc-list-dot"></span>病历整理与翻译</li>
+          <li><span class="svc-list-dot"></span>紧急情况24小时响应</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-num">04</div>
+        <span class="svc-icon">🌴</span>
+        <div class="svc-title">候鸟养老规划</div>
+        <span class="svc-title-en">Migratory Retirement Planning</span>
+        <p class="svc-desc">为退休华人设计秦皇岛·三亚·多伦多候鸟式健康养老方案，兼顾医疗资源、生活成本与家庭团聚。</p>
+        <ul class="svc-list">
+          <li><span class="svc-list-dot"></span>两地健康管理体系建立</li>
+          <li><span class="svc-list-dot"></span>秦皇岛 / 三亚资源对接</li>
+          <li><span class="svc-list-dot"></span>年度健康计划制定</li>
+          <li><span class="svc-list-dot"></span>家庭养老方案设计</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-num">05</div>
+        <span class="svc-icon">✈️</span>
+        <div class="svc-title">回国就医全程管家</div>
+        <span class="svc-title-en">Full-Service Medical Concierge</span>
+        <p class="svc-desc">从出发前的行程规划，到回加后的报告解读，提供完整一站式就医管家服务，让您的回国就医之旅顺畅无忧。</p>
+        <ul class="svc-list">
+          <li><span class="svc-list-dot"></span>行前准备与资料整理</li>
+          <li><span class="svc-list-dot"></span>机票 · 酒店 · 交通协调</li>
+          <li><span class="svc-list-dot"></span>全程医疗翻译陪同</li>
+          <li><span class="svc-list-dot"></span>回国后持续跟进</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-num">06</div>
+        <span class="svc-icon">📋</span>
+        <div class="svc-title">年度家庭健康管家</div>
+        <span class="svc-title-en">Annual Family Health Retainer</span>
+        <p class="svc-desc">订阅制长期顾问服务，覆盖您与伴侣及国内父母，全年健康管理、按需响应，成为您家庭的专属健康伙伴。</p>
+        <ul class="svc-list">
+          <li><span class="svc-list-dot"></span>每月一次健康顾问咨询</li>
+          <li><span class="svc-list-dot"></span>家庭健康档案全年管理</li>
+          <li><span class="svc-list-dot"></span>每年最多2次就医安排</li>
+          <li><span class="svc-list-dot"></span>紧急情况优先响应</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS ═══ -->
+
+<section class="section process-bg" id="process">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="section-tag-line"></div>
+      <span class="section-tag-text">服务流程</span>
+    </div>
+    <h2 class="section-h2 reveal">四步<span class="section-h2-em" style="color:var(--gold)">轻松开始</span></h2>
+    <p class="section-sub reveal">How It Works</p>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="step-circle"><div class="step-num">01</div></div>
+        <div class="step-title">免费初步咨询</div>
+        <div class="step-desc">微信或视频，15分钟了解您的需求、健康状况和预算，完全无压力。</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-circle"><div class="step-num">02</div></div>
+        <div class="step-title">定制专属方案</div>
+        <div class="step-desc">根据咨询结果，24小时内提供定制化方案和透明报价，供您选择。</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-circle"><div class="step-num">03</div></div>
+        <div class="step-title">全程安排跟进</div>
+        <div class="step-desc">预约机构、协调行程、陪同就医，全程我们负责，您只需安心出发。</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-circle"><div class="step-num">04</div></div>
+        <div class="step-title">报告解读回访</div>
+        <div class="step-desc">回加后为您解读检查报告，制定后续健康管理建议，持续陪伴。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DESTINATIONS ═══ -->
+
+<section class="section dest-bg" id="destinations">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="section-tag-line"></div>
+      <span class="section-tag-text">核心目的地</span>
+    </div>
+    <h2 class="section-h2 reveal">精选<span class="section-h2-em">就医养生</span>目的地</h2>
+    <p class="section-sub reveal">Our Destinations</p>
+    <div class="dest-grid">
+      <div class="dest-card dest-1 reveal">
+        <div class="dest-card-bg"></div>
+        <div class="dest-overlay"></div>
+        <div class="dest-emoji">🌊</div>
+        <div class="dest-content">
+          <span class="dest-badge">首选合作机构</span>
+          <span class="dest-name">秦皇岛 · 北戴河</span>
+          <div class="dest-desc">北戴河海吉雅医疗 · 海边养生 · 高端体检 · 干细胞抗衰<br>年均优良天数320天，宜居养老城市</div>
+        </div>
+      </div>
+      <div class="dest-card dest-2 reveal">
+        <div class="dest-card-bg"></div>
+        <div class="dest-overlay"></div>
+        <div class="dest-emoji">🏙️</div>
+        <div class="dest-content">
+          <span class="dest-badge">医疗中心</span>
+          <span class="dest-name">北京 · 上海</span>
+          <div class="dest-desc">协和 · 301 · 复旦附属 · 顶级三甲绿通<br>复杂疾病确诊、专科手术、精准医疗首选</div>
+        </div>
+      </div>
+      <div class="dest-card dest-3 reveal">
+        <div class="dest-card-bg"></div>
+        <div class="dest-overlay"></div>
+        <div class="dest-emoji">🌴</div>
+        <div class="dest-content">
+          <span class="dest-badge">冬季首选</span>
+          <span class="dest-name">三亚 · 海南</span>
+          <div class="dest-desc">冬季候鸟养老 · 康复疗养 · 中医调理<br>全年气温25°C+ · 远离多伦多严寒</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIAL ═══ -->
+
+<section class="section testi-bg" id="testimonial">
+  <div class="section-inner">
+    <div class="testi-wrap reveal">
+      <div class="section-tag" style="justify-content:center;">
+        <div class="section-tag-line"></div>
+        <span class="section-tag-text">客户故事</span>
+        <div class="section-tag-line"></div>
+      </div>
+      <span class="testi-quote-mark">"</span>
+      <p class="testi-text" id="tText">Aurora帮我安排了妈妈在秦皇岛的全面体检，发现了颈动脉斑块，早期干预了。她跟我说：「原来我的孩子一直在想着我。」那个表情，是我多年没见过的骄傲。谢谢Aurora，你帮的不只是我妈妈，是我。</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div>
+          <div class="testi-name" id="tName">陈女士</div>
+          <div class="testi-role" id="tRole">多伦多 · 移民14年</div>
+        </div>
+      </div>
+      <div class="testi-dots">
+        <button class="tdot on" onclick="goT(0)"></button>
+        <button class="tdot" onclick="goT(1)"></button>
+        <button class="tdot" onclick="goT(2)"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+
+<section class="section pricing-bg" id="pricing">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="section-tag-line"></div>
+      <span class="section-tag-text">收费方案</span>
+    </div>
+    <h2 class="section-h2 reveal">透明<span class="section-h2-em">定价</span>，无隐藏费用</h2>
+    <p class="section-sub reveal">Pricing Plans</p>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-name">单次顾问咨询</div>
+        <span class="price-name-en">One-Time Consultation</span>
+        <div class="price-amount"><span class="price-sup">$</span>150</div>
+        <div class="price-period">CAD · 起 / 次</div>
+        <ul class="price-list">
+          <li>60分钟深度咨询</li>
+          <li>健康需求评估报告</li>
+          <li>机构推荐与方案建议</li>
+          <li>微信后续跟进支持</li>
+        </ul>
+        <a href="#contact" class="btn-price btn-price-outline">预约咨询</a>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-popular">最受欢迎</div>
+        <div class="price-name">家庭年度管家</div>
+        <span class="price-name-en">Annual Family Retainer</span>
+        <div class="price-amount"><span class="price-sup">$</span>2,800</div>
+        <div class="price-period">CAD / 年 · 含父母</div>
+        <ul class="price-list">
+          <li>每月一次健康顾问咨询</li>
+          <li>家庭健康档案全年管理</li>
+          <li>每年最多2次回国就医安排</li>
+          <li>父母就医远程协调（不限次）</li>
+          <li>24小时紧急咨询响应</li>
+          <li>年度健康总结报告</li>
+          <li>合作机构专属优先通道</li>
+        </ul>
+        <a href="#contact" class="btn-price btn-price-gold">立即订阅</a>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-name">回国就医管家</div>
+        <span class="price-name-en">Medical Trip Concierge</span>
+        <div class="price-amount"><span class="price-sup">$</span>500</div>
+        <div class="price-period">CAD · 起 / 次</div>
+        <ul class="price-list">
+          <li>行前全程准备协助</li>
+          <li>机构预约与绿通安排</li>
+          <li>在华全程跟进支持</li>
+          <li>检查报告解读服务</li>
+          <li>回国后健康建议跟进</li>
+        </ul>
+        <a href="#contact" class="btn-price btn-price-outline">了解详情</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+
+<section class="section contact-bg" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="section-tag">
+          <div class="section-tag-line"></div>
+          <span class="section-tag-text">联系我们</span>
+        </div>
+        <h2 class="section-h2">有牵挂，<span style="font-style:italic;color:var(--gold)">来聊聊</span></h2>
+        <p class="section-sub">Get In Touch</p>
+        <p class="contact-desc">不一定要马上做决定，先告诉我您的情况。我会在24小时内回复，为您提供最适合的建议。</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">💬</div>
+            <div>
+              <div class="contact-item-label">微信 WeChat</div>
+              <div class="contact-item-val">Aurora_BridgeHealth</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📕</div>
+            <div>
+              <div class="contact-item-label">小红书</div>
+              <div class="contact-item-val">加拿大Aurora健康生活</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-val">aurorabridgehealthca@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div>
+              <div class="contact-item-label">总部</div>
+              <div class="contact-item-val">Toronto, Ontario, Canada</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-box reveal">
+        <div class="form-row-2">
+          <div>
+            <label class="form-label">您的姓名</label>
+            <input class="form-input" type="text" placeholder="王女士 / Mr. Li">
+          </div>
+          <div>
+            <label class="form-label">所在城市</label>
+            <input class="form-input" type="text" placeholder="Toronto / Vancouver">
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">联系方式（微信 / Email）</label>
+          <input class="form-input" type="text" placeholder="微信号或邮箱">
+        </div>
+        <div class="form-row">
+          <label class="form-label">感兴趣的服务</label>
+          <select class="form-select">
+            <option value="">请选择 —</option>
+            <option>高端体检安排</option>
+            <option>干细胞抗衰咨询</option>
+            <option>父母就医协调</option>
+            <option>候鸟养老规划</option>
+            <option>回国就医全程管家</option>
+            <option>年度家庭健康管家</option>
+            <option>其他 / 不确定</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">简单描述您的需求</label>
+          <textarea class="form-textarea" placeholder="例如：我妈妈在秦皇岛，最近身体不舒服，想帮她安排一次全面体检……"></textarea>
+        </div>
+        <button class="btn-submit" id="submitBtn" onclick="submitForm()">发送咨询 →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-en">Aurora Bridge Health</div>
+        <span class="footer-brand-zh">桥健康咨询</span>
+        <p class="footer-brand-desc">连接加拿大与中国的跨境健康顾问机构。注册于加拿大安大略省，服务全加拿大华人家庭。</p>
+      </div>
+      <div>
+        <div class="footer-col-title">服务项目</div>
+        <ul class="footer-links">
+          <li><a href="#services">高端体检安排</a></li>
+          <li><a href="#services">干细胞抗衰</a></li>
+          <li><a href="#services">父母就医协调</a></li>
+          <li><a href="#services">候鸟养老规划</a></li>
+          <li><a href="#services">年度健康管家</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">目的地</div>
+        <ul class="footer-links">
+          <li><a href="#destinations">秦皇岛 · 北戴河</a></li>
+          <li><a href="#destinations">北京 · 协和 · 301</a></li>
+          <li><a href="#destinations">上海 · 复旦附属</a></li>
+          <li><a href="#destinations">三亚 · 海南</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">联系我们</div>
+        <ul class="footer-links">
+          <li><a href="#">微信：Aurora_BridgeHealth</a></li>
+          <li><a href="#">小红书：加拿大Aurora健康生活</a></li>
+          <li><a href="#">aurorabridgehealthca@gmail.com</a></li>
+          <li><a href="#">Toronto, Ontario, Canada</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Aurora Bridge Health · 桥健康咨询. All rights reserved.</div>
+      <div class="footer-legal">
+        <a href="#">隐私政策</a>
+        <a href="#">免责声明</a>
+        <a href="#">服务条款</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAV ──
+function toggleDrawer(){
+  document.getElementById('drawer').classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+}
+
+// ── SCROLL REVEAL ──
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting){
+      setTimeout(() => e.target.classList.add('shown'), i * 70);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── NAV SHRINK ──
+window.addEventListener('scroll', () => {
+  document.querySelector('.nav').style.height = window.scrollY > 60 ? '56px' : '64px';
+});
+
+// ── TESTIMONIALS ──
+const ts = [
+  { text:'Aurora帮我安排了妈妈在秦皇岛的全面体检，发现了颈动脉斑块，早期干预了。她跟我说：「原来我的孩子一直在想着我。」那个表情，是我多年没见过的骄傲。谢谢Aurora，你帮的不只是我妈妈，是我。', name:'陈女士', role:'多伦多 · 移民14年' },
+  { text:'46岁，肚子不舒服，在加拿大等专科要10个月。Aurora帮我7天在国内做完了所有检查，发现了慢性胃炎和良性息肉，早发现早处理。整个费用比加拿大私立省了一半，效率快了不知道多少倍。', name:'李先生', role:'多伦多 · IT工程师' },
+  { text:'我55岁，每年在加拿大体检都说正常。Aurora建议我回国做了一次高端全面体检，发现了甲状腺结节4级。现在在密切随访中，庆幸发现得早。这笔钱花得太值了。', name:'王女士', role:'温哥华 · 移民18年' }
+];
+let ti = 0;
+function goT(i){
+  ti = i;
+  document.getElementById('tText').textContent = ts[i].text;
+  document.getElementById('tName').textContent = ts[i].name;
+  document.getElementById('tRole').textContent = ts[i].role;
+  document.querySelectorAll('.tdot').forEach((d,j) => d.classList.toggle('on', j===i));
+}
+setInterval(() => goT((ti+1)%3), 5000);
+
+// ── FORM ──
+function submitForm(){
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = '✓ 已发送！我们24小时内联系您';
+  btn.style.background = '#27ae60';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = '发送咨询 →';
+    btn.style.background = '';
+    btn.disabled = false;
+  }, 4000);
+}
+</script>
+
+</body>
+</html>
